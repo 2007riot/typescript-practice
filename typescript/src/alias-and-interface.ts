@@ -388,4 +388,24 @@ let move: Direction = 'up';
 
 //Interfaces can be implemented by classes, while type aliases cannot.
 //Type aliases can use computed properties, while interfaces cannot.
+//removing yellow warning, cause it's annoying
+john
+susan
+createUser
+newJohn
+createNewUser
+value
+theme
+book1
+book2
+discountedBook
+newDiskBook
+tiger
+dog
+deepWork
+const numberOrString: NumberOrString = 5
+numberOrString
+gameScore
+move
+
 
