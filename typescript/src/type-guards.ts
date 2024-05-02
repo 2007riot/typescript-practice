@@ -49,13 +49,13 @@ makeSound(dog);
 
 //Check for property
 function makeOtherSound(animal: Animal) {
-    'bark' in animal ? animal.bark() : animal.meow()
-    /* or 
+  "bark" in animal ? animal.bark() : animal.meow();
+  /* or 
     if ("bark" in animal) {animal.bark()}
     else {animal.meow()} */
 }
-makeOtherSound(cat)
-makeOtherSound(dog)
+makeOtherSound(cat);
+makeOtherSound(dog);
 
 //"Truthy"/"Falsy" guard
 /*
@@ -69,14 +69,16 @@ In TypeScript, "Truthy"/"Falsy" guard is a simple check for a truthy or falsy va
 - Now you can call the printLength function with a string, null, or undefined as the argument. The function will print the length of the string if a string is provided, or 'No string provided' otherwise.
 */
 function printLength(str: string | null | undefined) {
-    if (str) { console.log(str.length);
-    } else {console.log("No string provided");
-    }
+  if (str) {
+    console.log(str.length);
+  } else {
+    console.log("No string provided");
+  }
 }
 
-printLength("Galina")
-printLength(null)
-printLength(undefined)
+printLength("Galina");
+printLength(null);
+printLength(undefined);
 
 //instanceOf
 
@@ -85,71 +87,88 @@ printLength(undefined)
 //this type guard works well with unknown type, like with errors
 try {
   // Some code that may throw an error
-  throw new Error('This is an error');
+  throw new Error("This is an error");
 } catch (error) {
   if (error instanceof Error) {
-    console.log('Caught an Error object: ' + error.message);
+    console.log("Caught an Error object: " + error.message);
   } else {
-    console.log('Caught an unknown error');
+    console.log("Caught an unknown error");
   }
 }
 
-function checkInput(input: Date | string) : string {
-    return input instanceof Date ? input.getFullYear().toString() : input
+function checkInput(input: Date | string): string {
+  return input instanceof Date ? input.getFullYear().toString() : input;
 }
 
 const year = checkInput(new Date());
-const randomYear = checkInput('2020-05-05');
+const randomYear = checkInput("2020-05-05");
 console.log(year);
-console.log(randomYear)
+console.log(randomYear);
 
 // Challenge type predicate
 /* A type predicate is a function whose return type is a special kind of type that can be used to narrow down types within conditional blocks. */
 
 type Student = {
-    name: string;
-    study: () => void;
-  };
-  
-  type User = {
-    name: string;
-    login: () => void;
-  };
-  
-  type Person = Student | User;
-  
-  const randomPerson = (): Person => {
-    return Math.random() > 0.5
-      ? { name: 'john', study: () => console.log('Studying') }
-      : { name: 'mary', login: () => console.log('Logging in') };
-  };
-  
-  const person = randomPerson();
+  name: string;
+  study: () => void;
+};
 
-  
- 
-  function isStudent(person: Person):person is Person {
-    // return (person as Student).study !== undefined
-    // return "study" in person
-    return (person as Student).study !== undefined
-  }
+type User = {
+  name: string;
+  login: () => void;
+};
 
+type Person = Student | User;
+
+const randomPerson = (): Person => {
+  return Math.random() > 0.5
+    ? { name: "john", study: () => console.log("Studying") }
+    : { name: "mary", login: () => console.log("Logging in") };
+};
+
+const person = randomPerson();
+
+function isStudent(person: Person): person is Person {
+  // return (person as Student).study !== undefined
+  // return "study" in person
+  return (person as Student).study !== undefined;
+}
 
 //Discriminated Unions and exhaustive check using the never type
 //A discriminated union in TypeScript is a type that can be one of several different types, each identified by a unique literal property (the discriminator), allowing for type-safe handling of each possible variant.
 
 type IncrementAction = {
-    amount: number;
-    timestamp: number;
-    user: string;
-  };
-  
-  type DecrementAction = {
-    amount: number;
-    timestamp: number;
-    user: string;
-  };
-  
-  type Action = IncrementAction | DecrementAction;
+  type: "increment";
+  amount: number;
+  timestamp: number;
+  user: string;
+};
 
-  
+type DecrementAction = {
+  type: "decrement";
+  amount: number;
+  timestamp: number;
+  user: string;
+};
+
+type Action = IncrementAction | DecrementAction;
+
+function reducer(state: number, action: Action) {
+    //descremented unions and exhausted type unions
+  switch (action.type) {
+    case "increment":
+      return state + action.amount;
+    case "decrement":
+      return state - action.amount;
+    default:
+      const unexpectedAction: never = action;
+      throw new Error(`Unexpected action: ${unexpectedAction}`);
+  }
+}
+
+const newState = reducer(15, {
+  type: "decrement",
+  amount: 10,
+  timestamp: 123456,
+  user: "galina",
+});
