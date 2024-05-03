@@ -8,7 +8,8 @@ import { setupCounter } from './counter.ts'
 // import './challenges.ts'
 // import './fetchData.ts'
 // import './type-guards.ts'
-import './generics.ts'
+// import './generics.ts'
+import './fetchDataTour.ts'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>

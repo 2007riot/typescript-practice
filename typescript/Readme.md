@@ -1939,7 +1939,7 @@ tours.map((tour: any) => {
 - setup type and provide correct return type
 
 ```ts
-const url = 'https://www.scourse-api.com/react-tours-project';
+const url = 'https://www.course-api.com/react-tours-project';
 
 // Define a type for the data you're fetching.
 type Tour = {
